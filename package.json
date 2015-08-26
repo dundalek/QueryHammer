@@ -1,0 +1,42 @@
+{
+  "name": "queryhammer",
+  "version": "0.0.0",
+  "description": "QueryHammer is a visual tool that helps you create queries interactively",
+  "main": "",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "grammkit": "^0.3.1",
+    "lodash": "^3.10.1",
+    "pegjs": "^0.8.0",
+    "react": "^0.13.0"
+  },
+  "devDependencies": {
+    "babel-core": "^5.4.7",
+    "babel-eslint": "^3.1.9",
+    "babel-loader": "^5.1.2",
+    "eslint-plugin-react": "^2.3.0",
+    "json-loader": "^0.5.2",
+    "react-hot-loader": "^1.2.7",
+    "webpack": "^1.9.6",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dundalek/QueryHammer"
+  },
+  "keywords": [
+    "query",
+    "builder",
+    "visual",
+    "sparql"
+  ],
+  "author": "Jakub Dundalek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dundalek/QueryHammer/issues"
+  },
+  "homepage": "https://github.com/dundalek/QueryHammer"
+}
