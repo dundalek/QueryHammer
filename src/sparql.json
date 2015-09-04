@@ -1,0 +1,6390 @@
+{
+  "type": "grammar",
+  "rules": [{
+    "type": "rule",
+    "name": "QueryUnit",
+    "expression": {
+      "type": "rule_ref",
+      "name": "Query",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Query",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "Prologue",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "SelectQuery",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "ConstructQuery",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "DescribeQuery",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "AskQuery",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ValuesClause",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "UpdateUnit",
+    "expression": {
+      "type": "rule_ref",
+      "name": "Update",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Prologue",
+    "expression": {
+      "type": "zero_or_more",
+      "expression": {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "BaseDecl",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PrefixDecl",
+          "location": null
+        }],
+        "location": null
+      },
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BaseDecl",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "BASE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "IRIREF",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PrefixDecl",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "PREFIX",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PNAME_NS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "IRIREF",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SelectQuery",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "SelectClause",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "DatasetClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "WhereClause",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SolutionModifier",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SubSelect",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "SelectClause",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "WhereClause",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SolutionModifier",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ValuesClause",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SelectClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "SELECT",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "REDUCED",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "one_or_more",
+          "expression": {
+            "type": "choice",
+            "alternatives": [{
+              "type": "rule_ref",
+              "name": "Var",
+              "location": null
+            }, {
+              "type": "sequence",
+              "elements": [{
+                "type": "literal",
+                "value": "(",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "Expression",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": "AS",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "Var",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": ")",
+                "location": null
+              }],
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "*",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ConstructQuery",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "CONSTRUCT",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "sequence",
+          "elements": [{
+            "type": "rule_ref",
+            "name": "ConstructTemplate",
+            "location": null
+          }, {
+            "type": "zero_or_more",
+            "expression": {
+              "type": "rule_ref",
+              "name": "DatasetClause",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "WhereClause",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "SolutionModifier",
+            "location": null
+          }],
+          "location": null
+        }, {
+          "type": "sequence",
+          "elements": [{
+            "type": "zero_or_more",
+            "expression": {
+              "type": "rule_ref",
+              "name": "DatasetClause",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "WHERE",
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "{",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "TriplesTemplate",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "}",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "SolutionModifier",
+            "location": null
+          }],
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DescribeQuery",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "DESCRIBE",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "one_or_more",
+          "expression": {
+            "type": "rule_ref",
+            "name": "VarOrIri",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "*",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "DatasetClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "WhereClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SolutionModifier",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "AskQuery",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "ASK",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "DatasetClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "WhereClause",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SolutionModifier",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DatasetClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "FROM",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "DefaultGraphClause",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "NamedGraphClause",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DefaultGraphClause",
+    "expression": {
+      "type": "rule_ref",
+      "name": "SourceSelector",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NamedGraphClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "NAMED",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SourceSelector",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SourceSelector",
+    "expression": {
+      "type": "rule_ref",
+      "name": "iri",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "WhereClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "WHERE",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SolutionModifier",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "GroupClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "HavingClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "OrderClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "LimitOffsetClauses",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GroupClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "GROUP",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "BY",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "GroupCondition",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GroupCondition",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "BuiltInCall",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "FunctionCall",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "AS",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "Var",
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "HavingClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "HAVING",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "HavingCondition",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "HavingCondition",
+    "expression": {
+      "type": "rule_ref",
+      "name": "Constraint",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "OrderClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "ORDER",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "BY",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "OrderCondition",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "OrderCondition",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "choice",
+          "alternatives": [{
+            "type": "literal",
+            "value": "ASC",
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "DESC",
+            "location": null
+          }],
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "BrackettedExpression",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "Constraint",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Var",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "LimitOffsetClauses",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "LimitClause",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "rule_ref",
+            "name": "OffsetClause",
+            "location": null
+          },
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "OffsetClause",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "rule_ref",
+            "name": "LimitClause",
+            "location": null
+          },
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "LimitClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "LIMIT",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "INTEGER",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "OffsetClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "OFFSET",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "INTEGER",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ValuesClause",
+    "expression": {
+      "type": "optional",
+      "expression": {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "VALUES",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "DataBlock",
+          "location": null
+        }],
+        "location": null
+      },
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Update",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "Prologue",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "rule_ref",
+            "name": "Update1",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "sequence",
+              "elements": [{
+                "type": "literal",
+                "value": ";",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "Update",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Update1",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "Load",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Clear",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Drop",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Add",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Move",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Copy",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Create",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "InsertData",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DeleteData",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DeleteWhere",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Modify",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Load",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "LOAD",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "INTO",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "GraphRef",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Clear",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "CLEAR",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphRefAll",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Drop",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "DROP",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphRefAll",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Create",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "CREATE",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphRef",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Add",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "ADD",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "TO",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Move",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "MOVE",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "TO",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Copy",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "COPY",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "TO",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphOrDefault",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "InsertData",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "INSERT DATA",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "QuadData",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DeleteData",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "DELETE DATA",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "QuadData",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DeleteWhere",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "DELETE WHERE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "QuadPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Modify",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "WITH",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "iri",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "sequence",
+          "elements": [{
+            "type": "rule_ref",
+            "name": "DeleteClause",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "InsertClause",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "InsertClause",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "UsingClause",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "WHERE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DeleteClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "DELETE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "QuadPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "InsertClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "INSERT",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "QuadPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "UsingClause",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "USING",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "iri",
+          "location": null
+        }, {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "NAMED",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "iri",
+            "location": null
+          }],
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphOrDefault",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "literal",
+        "value": "DEFAULT",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "GRAPH",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "iri",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphRef",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "GRAPH",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphRefAll",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "GraphRef",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "DEFAULT",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "NAMED",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "ALL",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "QuadPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Quads",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "QuadData",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Quads",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Quads",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "TriplesTemplate",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "rule_ref",
+            "name": "QuadsNotTriples",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "literal",
+              "value": ".",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "TriplesTemplate",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "QuadsNotTriples",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "GRAPH",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VarOrIri",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "TriplesTemplate",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesTemplate",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "TriplesSameSubject",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ".",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "TriplesTemplate",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GroupGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "SubSelect",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "GroupGraphPatternSub",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GroupGraphPatternSub",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "TriplesBlock",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "rule_ref",
+            "name": "GraphPatternNotTriples",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "literal",
+              "value": ".",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "TriplesBlock",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesBlock",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "TriplesSameSubjectPath",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ".",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "TriplesBlock",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphPatternNotTriples",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "GroupOrUnionGraphPattern",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "OptionalGraphPattern",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "MinusGraphPattern",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphGraphPattern",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ServiceGraphPattern",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Filter",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Bind",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "InlineData",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "OptionalGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "OPTIONAL",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "GRAPH",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VarOrIri",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ServiceGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "SERVICE",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "literal",
+          "value": "SILENT",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VarOrIri",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Bind",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "BIND",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "AS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "InlineData",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "VALUES",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DataBlock",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DataBlock",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "InlineDataOneVar",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "InlineDataFull",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "InlineDataOneVar",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "DataBlockValue",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "InlineDataFull",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "NIL",
+          "location": null
+        }, {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "(",
+            "location": null
+          }, {
+            "type": "zero_or_more",
+            "expression": {
+              "type": "rule_ref",
+              "name": "Var",
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "literal",
+            "value": ")",
+            "location": null
+          }],
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "(",
+              "location": null
+            }, {
+              "type": "zero_or_more",
+              "expression": {
+                "type": "rule_ref",
+                "name": "DataBlockValue",
+                "location": null
+              },
+              "location": null
+            }, {
+              "type": "literal",
+              "value": ")",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "NIL",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DataBlockValue",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "RDFLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NumericLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BooleanLiteral",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "UNDEF",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "MinusGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "MINUS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GroupOrUnionGraphPattern",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "UNION",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "GroupGraphPattern",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Filter",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "FILTER",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Constraint",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Constraint",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "BrackettedExpression",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BuiltInCall",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "FunctionCall",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "FunctionCall",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ArgList",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ArgList",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "NIL",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "zero_or_more",
+          "expression": {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": ",",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "Expression",
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ExpressionList",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "NIL",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "zero_or_more",
+          "expression": {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": ",",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "Expression",
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ConstructTemplate",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "{",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "ConstructTriples",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "}",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ConstructTriples",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "TriplesSameSubject",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ".",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "rule_ref",
+              "name": "ConstructTriples",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesSameSubject",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "VarOrTerm",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PropertyListNotEmpty",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "TriplesNode",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PropertyList",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PropertyList",
+    "expression": {
+      "type": "optional",
+      "expression": {
+        "type": "rule_ref",
+        "name": "PropertyListNotEmpty",
+        "location": null
+      },
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PropertyListNotEmpty",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "Verb",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ObjectList",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ";",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "sequence",
+              "elements": [{
+                "type": "rule_ref",
+                "name": "Verb",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "ObjectList",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Verb",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "VarOrIri",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "a",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ObjectList",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "Object",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ",",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "Object",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Object",
+    "expression": {
+      "type": "rule_ref",
+      "name": "GraphNode",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesSameSubjectPath",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "VarOrTerm",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PropertyListPathNotEmpty",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "rule_ref",
+          "name": "TriplesNodePath",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PropertyListPath",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PropertyListPath",
+    "expression": {
+      "type": "optional",
+      "expression": {
+        "type": "rule_ref",
+        "name": "PropertyListPathNotEmpty",
+        "location": null
+      },
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PropertyListPathNotEmpty",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "VerbPath",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "VerbSimple",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ObjectListPath",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ";",
+            "location": null
+          }, {
+            "type": "optional",
+            "expression": {
+              "type": "sequence",
+              "elements": [{
+                "type": "choice",
+                "alternatives": [{
+                  "type": "rule_ref",
+                  "name": "VerbPath",
+                  "location": null
+                }, {
+                  "type": "rule_ref",
+                  "name": "VerbSimple",
+                  "location": null
+                }],
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "ObjectList",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VerbPath",
+    "expression": {
+      "type": "rule_ref",
+      "name": "Path",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VerbSimple",
+    "expression": {
+      "type": "rule_ref",
+      "name": "Var",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ObjectListPath",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "ObjectPath",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ",",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "ObjectPath",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ObjectPath",
+    "expression": {
+      "type": "rule_ref",
+      "name": "GraphNodePath",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Path",
+    "expression": {
+      "type": "rule_ref",
+      "name": "PathAlternative",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathAlternative",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "PathSequence",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "|",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "PathSequence",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathSequence",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "PathEltOrInverse",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "/",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "PathEltOrInverse",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathElt",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "PathPrimary",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "PathMod",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathEltOrInverse",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PathElt",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "^",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PathElt",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathMod",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "literal",
+        "value": "?",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "*",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "+",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathPrimary",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "a",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "!",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PathNegatedPropertySet",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Path",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathNegatedPropertySet",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PathOneInPropertySet",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "sequence",
+            "elements": [{
+              "type": "rule_ref",
+              "name": "PathOneInPropertySet",
+              "location": null
+            }, {
+              "type": "zero_or_more",
+              "expression": {
+                "type": "sequence",
+                "elements": [{
+                  "type": "literal",
+                  "value": "|",
+                  "location": null
+                }, {
+                  "type": "rule_ref",
+                  "name": "PathOneInPropertySet",
+                  "location": null
+                }],
+                "location": null
+              },
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PathOneInPropertySet",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "a",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "^",
+          "location": null
+        }, {
+          "type": "choice",
+          "alternatives": [{
+            "type": "rule_ref",
+            "name": "iri",
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "a",
+            "location": null
+          }],
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Integer",
+    "expression": {
+      "type": "rule_ref",
+      "name": "INTEGER",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesNode",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "Collection",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BlankNodePropertyList",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BlankNodePropertyList",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "[",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PropertyListNotEmpty",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "TriplesNodePath",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "CollectionPath",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BlankNodePropertyListPath",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BlankNodePropertyListPath",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "[",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PropertyListPathNotEmpty",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Collection",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "GraphNode",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "CollectionPath",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "GraphNodePath",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphNode",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "VarOrTerm",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "TriplesNode",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphNodePath",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "VarOrTerm",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "TriplesNodePath",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VarOrTerm",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GraphTerm",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VarOrIri",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Var",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "VAR1",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VAR2",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "GraphTerm",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "RDFLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NumericLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BooleanLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BlankNode",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NIL",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Expression",
+    "expression": {
+      "type": "rule_ref",
+      "name": "ConditionalOrExpression",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ConditionalOrExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "ConditionalAndExpression",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "||",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "ConditionalAndExpression",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ConditionalAndExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "ValueLogical",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "&&",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "ValueLogical",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ValueLogical",
+    "expression": {
+      "type": "rule_ref",
+      "name": "RelationalExpression",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "RelationalExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "NumericExpression",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "=",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "!=",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "<",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": ">",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "<=",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": ">=",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "NumericExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "IN",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "ExpressionList",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "NOT",
+              "location": null
+            }, {
+              "type": "literal",
+              "value": "IN",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "ExpressionList",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NumericExpression",
+    "expression": {
+      "type": "rule_ref",
+      "name": "AdditiveExpression",
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "AdditiveExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "MultiplicativeExpression",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "+",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "MultiplicativeExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "-",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "MultiplicativeExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "choice",
+              "alternatives": [{
+                "type": "rule_ref",
+                "name": "NumericLiteralPositive",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "NumericLiteralNegative",
+                "location": null
+              }],
+              "location": null
+            }, {
+              "type": "zero_or_more",
+              "expression": {
+                "type": "choice",
+                "alternatives": [{
+                  "type": "sequence",
+                  "elements": [{
+                    "type": "literal",
+                    "value": "*",
+                    "location": null
+                  }, {
+                    "type": "rule_ref",
+                    "name": "UnaryExpression",
+                    "location": null
+                  }],
+                  "location": null
+                }, {
+                  "type": "sequence",
+                  "elements": [{
+                    "type": "literal",
+                    "value": "/",
+                    "location": null
+                  }, {
+                    "type": "rule_ref",
+                    "name": "UnaryExpression",
+                    "location": null
+                  }],
+                  "location": null
+                }],
+                "location": null
+              },
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "MultiplicativeExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "UnaryExpression",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "*",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "UnaryExpression",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "/",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "UnaryExpression",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "UnaryExpression",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "!",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PrimaryExpression",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "+",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PrimaryExpression",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "-",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PrimaryExpression",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PrimaryExpression",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PrimaryExpression",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "BrackettedExpression",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BuiltInCall",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "iriOrFunction",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "RDFLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NumericLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "BooleanLiteral",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Var",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BrackettedExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BuiltInCall",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "Aggregate",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STR",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "LANG",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "LANGMATCHES",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "DATATYPE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "BOUND",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Var",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "IRI",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "URI",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "BNODE",
+          "location": null
+        }, {
+          "type": "choice",
+          "alternatives": [{
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "(",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "Expression",
+              "location": null
+            }, {
+              "type": "literal",
+              "value": ")",
+              "location": null
+            }],
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "NIL",
+            "location": null
+          }],
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "RAND",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "NIL",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "ABS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "CEIL",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "FLOOR",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "ROUND",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "CONCAT",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "ExpressionList",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "SubstringExpression",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRLEN",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "StrReplaceExpression",
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "UCASE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "LCASE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "ENCODE_FOR_URI",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "CONTAINS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRSTARTS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRENDS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRBEFORE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRAFTER",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "YEAR",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "MONTH",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "DAY",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "HOURS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "MINUTES",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SECONDS",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "TIMEZONE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "TZ",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "NOW",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "NIL",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "UUID",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "NIL",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRUUID",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "NIL",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "MD5",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SHA1",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SHA256",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SHA384",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SHA512",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "COALESCE",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "ExpressionList",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "IF",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRLANG",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "STRDT",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "sameTerm",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "isIRI",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "isURI",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "isBLANK",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "isLITERAL",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "isNUMERIC",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "RegexExpression",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ExistsFunc",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NotExistsFunc",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "RegexExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "REGEX",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ",",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ",",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "Expression",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "SubstringExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "SUBSTR",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ",",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ",",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "Expression",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "StrReplaceExpression",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "REPLACE",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ",",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ",",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "Expression",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": ",",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "Expression",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ExistsFunc",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "EXISTS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NotExistsFunc",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "NOT",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "EXISTS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "GroupGraphPattern",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "Aggregate",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "COUNT",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "choice",
+          "alternatives": [{
+            "type": "literal",
+            "value": "*",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "Expression",
+            "location": null
+          }],
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SUM",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "MIN",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "MAX",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "AVG",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "SAMPLE",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": "GROUP_CONCAT",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "literal",
+            "value": "DISTINCT",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "Expression",
+          "location": null
+        }, {
+          "type": "optional",
+          "expression": {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": ";",
+              "location": null
+            }, {
+              "type": "literal",
+              "value": "SEPARATOR",
+              "location": null
+            }, {
+              "type": "literal",
+              "value": "=",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "String",
+              "location": null
+            }],
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "iriOrFunction",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "iri",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "ArgList",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "RDFLiteral",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "String",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "rule_ref",
+            "name": "LANGTAG",
+            "location": null
+          }, {
+            "type": "sequence",
+            "elements": [{
+              "type": "literal",
+              "value": "^^",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "iri",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NumericLiteral",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "NumericLiteralUnsigned",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NumericLiteralPositive",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "NumericLiteralNegative",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NumericLiteralUnsigned",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "INTEGER",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DECIMAL",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DOUBLE",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NumericLiteralPositive",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "INTEGER_POSITIVE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DECIMAL_POSITIVE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DOUBLE_POSITIVE",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NumericLiteralNegative",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "INTEGER_NEGATIVE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DECIMAL_NEGATIVE",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DOUBLE_NEGATIVE",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BooleanLiteral",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "literal",
+        "value": "true",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "false",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "String",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "STRING_LITERAL1",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "STRING_LITERAL2",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "STRING_LITERAL_LONG1",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "STRING_LITERAL_LONG2",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "iri",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "IRIREF",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PrefixedName",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PrefixedName",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PNAME_LN",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PNAME_NS",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BlankNode",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "BLANK_NODE_LABEL",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "ANON",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "IRIREF",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "<",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "simple_not",
+            "expression": {
+              "type": "class",
+              "inverted": false,
+              "rawText": "[#x00-#x20]",
+              "location": null
+            }
+          }, {
+            "type": "class",
+            "inverted": true,
+            "rawText": "[^<>\"{}|^`\\]",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ">",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PNAME_NS",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "optional",
+        "expression": {
+          "type": "rule_ref",
+          "name": "PN_PREFIX",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ":",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PNAME_LN",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "PNAME_NS",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PN_LOCAL",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "BLANK_NODE_LABEL",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "_:",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "PN_CHARS_U",
+          "location": null
+        }, {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "zero_or_more",
+            "expression": {
+              "type": "choice",
+              "alternatives": [{
+                "type": "rule_ref",
+                "name": "PN_CHARS",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": ".",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "PN_CHARS",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VAR1",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "?",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VARNAME",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VAR2",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "$",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "VARNAME",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "LANGTAG",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "@",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[a-zA-Z]",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "literal",
+            "value": "-",
+            "location": null
+          }, {
+            "type": "one_or_more",
+            "expression": {
+              "type": "class",
+              "inverted": false,
+              "rawText": "[a-zA-Z0-9]",
+              "location": null
+            },
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "INTEGER",
+    "expression": {
+      "type": "one_or_more",
+      "expression": {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[0-9]",
+        "location": null
+      },
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DECIMAL",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "zero_or_more",
+        "expression": {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ".",
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DOUBLE",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "sequence",
+        "elements": [{
+          "type": "one_or_more",
+          "expression": {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[0-9]",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ".",
+          "location": null
+        }, {
+          "type": "zero_or_more",
+          "expression": {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[0-9]",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "EXPONENT",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "literal",
+          "value": ".",
+          "location": null
+        }, {
+          "type": "one_or_more",
+          "expression": {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[0-9]",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "EXPONENT",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "sequence",
+        "elements": [{
+          "type": "one_or_more",
+          "expression": {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[0-9]",
+            "location": null
+          },
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "EXPONENT",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "INTEGER_POSITIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "+",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "INTEGER",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DECIMAL_POSITIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "+",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DECIMAL",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DOUBLE_POSITIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "+",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DOUBLE",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "INTEGER_NEGATIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "-",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "INTEGER",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DECIMAL_NEGATIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "-",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DECIMAL",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "DOUBLE_NEGATIVE",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "-",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "DOUBLE",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "EXPONENT",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "class",
+        "inverted": false,
+        "rawText": "[eE]",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[+-]",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "one_or_more",
+        "expression": {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "STRING_LITERAL1",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "'",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "class",
+            "inverted": true,
+            "rawText": "[^#x27#x5C#xA#xD]",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "ECHAR",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "'",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "STRING_LITERAL2",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "\"",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "class",
+            "inverted": true,
+            "rawText": "[^#x22#x5C#xA#xD]",
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "ECHAR",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "\"",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "STRING_LITERAL_LONG1",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "'''",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "optional",
+            "expression": {
+              "type": "choice",
+              "alternatives": [{
+                "type": "literal",
+                "value": "'",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": "''",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "choice",
+            "alternatives": [{
+              "type": "class",
+              "inverted": true,
+              "rawText": "[^'\\]",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "ECHAR",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "'''",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "STRING_LITERAL_LONG2",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "\"\"\"",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "optional",
+            "expression": {
+              "type": "choice",
+              "alternatives": [{
+                "type": "literal",
+                "value": "\"",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": "\"\"",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "choice",
+            "alternatives": [{
+              "type": "class",
+              "inverted": true,
+              "rawText": "[^\"\\]",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "ECHAR",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "\"\"\"",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ECHAR",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "\\",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[tbnrf\\\"']",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "NIL",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "(",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "WS",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": ")",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "WS",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "literal",
+        "value": "#x20",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "#x9",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "#xD",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "#xA",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "ANON",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "[",
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "rule_ref",
+          "name": "WS",
+          "location": null
+        },
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_CHARS_BASE",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "class",
+        "inverted": false,
+        "rawText": "[A-Z]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[a-z]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x00C0-#x00D6]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x00D8-#x00F6]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x00F8-#x02FF]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x0370-#x037D]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x037F-#x1FFF]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x200C-#x200D]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x2070-#x218F]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x2C00-#x2FEF]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x3001-#xD7FF]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#xF900-#xFDCF]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#xFDF0-#xFFFD]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x10000-#xEFFFF]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_CHARS_U",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PN_CHARS_BASE",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "_",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "VARNAME",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "PN_CHARS_U",
+          "location": null
+        }, {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "zero_or_more",
+        "expression": {
+          "type": "choice",
+          "alternatives": [{
+            "type": "rule_ref",
+            "name": "PN_CHARS_U",
+            "location": null
+          }, {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[0-9]",
+            "location": null
+          }, {
+            "type": "literal",
+            "value": "#x00B7",
+            "location": null
+          }, {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[#x0300-#x036F]",
+            "location": null
+          }, {
+            "type": "class",
+            "inverted": false,
+            "rawText": "[#x203F-#x2040]",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_CHARS",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PN_CHARS_U",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "-",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[0-9]",
+        "location": null
+      }, {
+        "type": "literal",
+        "value": "#x00B7",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x0300-#x036F]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[#x203F-#x2040]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_PREFIX",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "rule_ref",
+        "name": "PN_CHARS_BASE",
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "zero_or_more",
+            "expression": {
+              "type": "choice",
+              "alternatives": [{
+                "type": "rule_ref",
+                "name": "PN_CHARS",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": ".",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "rule_ref",
+            "name": "PN_CHARS",
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_LOCAL",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "choice",
+        "alternatives": [{
+          "type": "rule_ref",
+          "name": "PN_CHARS_U",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ":",
+          "location": null
+        }, {
+          "type": "class",
+          "inverted": false,
+          "rawText": "[0-9]",
+          "location": null
+        }, {
+          "type": "rule_ref",
+          "name": "PLX",
+          "location": null
+        }],
+        "location": null
+      }, {
+        "type": "optional",
+        "expression": {
+          "type": "sequence",
+          "elements": [{
+            "type": "zero_or_more",
+            "expression": {
+              "type": "choice",
+              "alternatives": [{
+                "type": "rule_ref",
+                "name": "PN_CHARS",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": ".",
+                "location": null
+              }, {
+                "type": "literal",
+                "value": ":",
+                "location": null
+              }, {
+                "type": "rule_ref",
+                "name": "PLX",
+                "location": null
+              }],
+              "location": null
+            },
+            "location": null
+          }, {
+            "type": "choice",
+            "alternatives": [{
+              "type": "rule_ref",
+              "name": "PN_CHARS",
+              "location": null
+            }, {
+              "type": "literal",
+              "value": ":",
+              "location": null
+            }, {
+              "type": "rule_ref",
+              "name": "PLX",
+              "location": null
+            }],
+            "location": null
+          }],
+          "location": null
+        },
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PLX",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "rule_ref",
+        "name": "PERCENT",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "PN_LOCAL_ESC",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PERCENT",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "%",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "HEX",
+        "location": null
+      }, {
+        "type": "rule_ref",
+        "name": "HEX",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "HEX",
+    "expression": {
+      "type": "choice",
+      "alternatives": [{
+        "type": "class",
+        "inverted": false,
+        "rawText": "[0-9]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[A-F]",
+        "location": null
+      }, {
+        "type": "class",
+        "inverted": false,
+        "rawText": "[a-f]",
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }, {
+    "type": "rule",
+    "name": "PN_LOCAL_ESC",
+    "expression": {
+      "type": "sequence",
+      "elements": [{
+        "type": "literal",
+        "value": "\\",
+        "location": null
+      }, {
+        "type": "choice",
+        "alternatives": [{
+          "type": "literal",
+          "value": "_",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "~",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ".",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "-",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "!",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "$",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "&",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "'",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "(",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ")",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "*",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "+",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ",",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": ";",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "=",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "/",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "?",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "#",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "@",
+          "location": null
+        }, {
+          "type": "literal",
+          "value": "%",
+          "location": null
+        }],
+        "location": null
+      }],
+      "location": null
+    },
+    "location": null
+  }],
+  "location": null
+}
