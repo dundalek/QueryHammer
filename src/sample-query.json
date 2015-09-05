@@ -1,0 +1,64 @@
+{
+  "type": "query",
+  "queryType": "SELECT",
+  "variables": [
+    "?mickey",
+    {
+      "expression": {
+        "type": "operation",
+        "operator": "ucase",
+        "args": [
+          "?mickey"
+        ]
+      },
+      "variable": "?pom"
+    }
+  ],
+  "distinct": true,
+  "from": {
+    "default": [
+      "http://example.org/dft.ttl"
+    ],
+    "named": [
+      "http://example.org/alice",
+      "http://example.org/bob"
+    ]
+  },
+  "where": [
+    {
+      "type": "bgp",
+      "triples": [
+        {
+          "subject": "?mickey",
+          "predicate": "http://xmlns.com/foaf/0.1/name",
+          "object": "\"Mickey Mouse\"@en"
+        },
+        {
+          "subject": "?mickey",
+          "predicate": "http://ahoj.com/pokus",
+          "object": "\"cau\""
+        },
+        {
+          "subject": "?mickey",
+          "predicate": "http://xmlns.com/foaf/0.1/knows",
+          "object": "?other"
+        }
+      ]
+    }
+  ],
+  "order": [
+    {
+      "expression": "?name"
+    },
+    {
+      "expression": "?emp",
+      "descending": true
+    }
+  ],
+  "limit": 100,
+  "offset": 200,
+  "prefixes": {
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "": "http://example.com/ontology/"
+  }
+}

@@ -1,0 +1,17 @@
+BASE <http://ahoj.com/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX : <http://example.com/ontology/>
+SELECT DISTINCT ?mickey (UCASE(?mickey) AS ?pom)
+
+FROM <http://example.org/dft.ttl>
+FROM NAMED <http://example.org/alice>
+FROM NAMED <http://example.org/bob>
+
+ {
+  ?mickey foaf:name "Mickey Mouse"@en;
+          <pokus> "cau";
+          foaf:knows ?other.
+}
+ORDER BY ?name DESC(?emp)
+LIMIT 100
+OFFSET 200

@@ -5,147 +5,69 @@ import cx from 'classnames';
 require('bootstrap/dist/css/bootstrap.css');
 require('./style.css');
 
-
-var grammar = require('./sparql.json');
-
-var rules = _.indexBy(grammar.rules, 'name');
-
-var rulesExpanded = 'Query'.split(/\s+/);
-var rulesInlined = 'Query Prologue ValuesClause BaseDecl PrefixDecl IRIREF'.split(/\s+/);
-
-
-var components = {
-  rule: class Rule extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {expanded: props.initialExpanded || false};
-    }
-    render() {
-      if (rulesInlined.indexOf(this.props.expression.name) !== -1) {
-        return dispatch({expression: this.props.expression.expression});
-      }
-      return (
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <button
-              className={cx("btn btn-default btn-xs", "glyphicon", this.state.expanded ?  "glyphicon-chevron-down" : "glyphicon-chevron-right")}
-              onClick={this.toggleExpanded.bind(this)}></button>
-            {this.props.expression.name}
-          </div>
-          {this.state.expanded && <div className="panel-body">
-            {dispatch({expression: this.props.expression.expression})}
-          </div>}
-        </div>
-      );
-    }
-    toggleExpanded() {
-      this.setState({expanded: !this.state.expanded});
-    }
-  },
-  one_or_more: class OneOrMore extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {count: 2};
-    }
-    render() {
-      return (
-        <div>
-          {_.range(this.state.count).map(i =>
-             dispatch({expression: this.props.expression.expression})
-          )}
-          <button type="button" className="btn btn-default">
-            <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
-        </div>
-      )
-      
-    }
-  },
-  zero_or_more: class ZeroOrMore extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {count: 2};
-    }
-    render() {
-      return (
-        <div>
-          {_.range(this.state.count).map(i =>
-             <div style={{"border": "1px solid #ccc", "border-radius": "5px"}}>{dispatch({expression: this.props.expression.expression})}</div>
-          )}
-          <button type="button" className="btn btn-default">
-            <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
-        </div>
-      )
-      
-    }
-  },
-  rule_ref: class RuleRef extends Component {
-    render() {
-      return React.createElement(components.rule, {
-          expression: rules[this.props.expression.name],
-          initialExpanded: false
-        });
-    }
-  },
-  literal: class Literal extends Component {
-    render() {
-      return (
-        <span className="label label-default">{this.props.expression.value}</span>
-      );
-    }
-  },
-  choice: class Choice extends Component {
-    render() {
-      return (
-        <ul>
-          {this.props.expression.alternatives.map(r => 
-            <li>{dispatch({expression: r})}</li>
-          )}
-        </ul>
-      );
-    }
-  },
-  sequence: class Sequence extends Component {
-    render() {
-      return (
-        <div>
-          {this.props.expression.elements.map(r => 
-            dispatch({expression: r})
-          )}
-        </div>
-      );
-    }
-  },
-  unknown: class Unknown extends Component {
-    render() {
-      return (
-        <div>
-          Unknown: {this.props.expression.type}
-        </div>
-      );
-    }
+class Literal extends Component {
+  render() {
+    return (
+      <span className="label label-default">{this.props.value}</span>
+    );
   }
-};
-
-// _.each(components, (val, key) => {
-//   components[key] = React.createFactory(val)
-// });
-
-function dispatch(data) {
-  var node = data.expression;
-  var component = components[node.type] || components.unknown;
-  return React.createElement(component, data);
 }
+
+var q = require('./sample-query.json');
+
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        {dispatch({
-          expression: rules.Query,
-          initialExpanded: true
-        })}
+        {_.map(q.prefixes, (val, key) =>
+          <div><Literal value="PREFIX"/><input value={key}/> : <input value={val}/></div>
+        )}
+        {/* queryType: 'SELECT' */}
+        
+        <br/>
+        {/* SelectClause */}
+        <Literal value="SELECT"/> <Literal value="DISTINCT | REDUCED"/>
+        <br/>
+        <Literal value="*"/>
+        {/*"variables": [
+          "*"
+        ]*/}
+        <br/>
+        <input value="var"/>
+        <br/>
+        (<input value="expression"/> <Literal value="AS"/> <input value="var"/>)
+        
+        {/* DatasetClause */}
+        <br/>
+        <br/>
+        <Literal value="FROM" />
+        <input value="graph"/>
+        <br/>
+        <Literal value="FROM" /> <Literal value="NAMED"/> <input value="graph"/>
+        
+        <br/>
+        <br/>
+        {/* WhereClause */}
+        <Literal value="WHERE?" /> 
+        {'{'}
+        SubSelect
+        
+        {'}'}
+        
+        <br/>
+        <br/>
+        {/* SolutionModifier */}
+        <Literal value="GROUP BY?" /> 
+        <Literal value="HAVING?" /> 
+        <Literal value="HAVING?" /> 
+        <Literal value="ORDER BY?" />  <Literal value="DESC?" /> <input value="expression"/>
+        
+        <br/>
+        <Literal value="LIMIT?" /> <input type="number" value={q.limit} />
+        <br/>
+        <Literal value="OFFSET?" /> <input type="number"  value={q.offset}/>
+        
       </div>
     );
   }
