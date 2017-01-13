@@ -1,0 +1,64 @@
+start :framed -> select_statement ";" preview;
+#start :framed -> delete_statement ";" preview;
+#start :framed -> insert_statement ";" preview;
+#start :framed -> update_statement ";" preview;
+
+preview -> @preview(start,"Lucidatypewriter",300,200,"Close")="Show";
+
+select_statement "SELECT" -> "SELECT" distinct select_clause table_expression;
+
+distinct "DISTINCT" -> " DISTINCT " | @;
+
+select_clause -> wildcard | columns;
+wildcard "*" -> " * ";
+columns -> @string="column1, column2";
+#columns -> column column_box;
+#column -> @string;
+#column_box -> @container(column);
+
+table_expression -> from_clause joined_table where_clause order_by_clause group_by_clause having_clause;
+
+from_clause :horizontal "FROM" -> " FROM "  table_name from_as;
+from_as :beside "AS" -> " AS " @string | @;
+
+joined_table -> join | @;
+join :horizontal "JOIN" -> " JOIN " @string join_clauses;
+join_clauses -> join_on | join_using | @;
+join_on :beside "ON" -> " ON " @string;
+join_using :beside "USING" -> " USING " @string;
+
+where_clause "WHERE" -> " WHERE " search_condition | @;
+
+order_by_clause :horizontal "ORDER BY" -> " ORDER BY " @string ordering_specification | @;
+
+ordering_specification :beside -> ordering_specification_asc | ordering_specification_desc;
+ordering_specification_asc "ASC" -> " ASC ";
+ordering_specification_desc "DESC" -> " DESC ";
+
+group_by_clause "GROUP BY" -> " GROUP BY " @string | @;
+
+having_clause "HAVING" -> " HAVING " @string | @;
+
+search_condition -> @string;
+
+table_name -> @string="tablename";
+
+## -----
+
+delete_statement "DELETE" -> "DELETE FROM " table_name where_clause;
+
+## -----
+
+insert_statement "INSERT" -> "INSERT INTO " table_name insert_columns_and_source;
+insert_columns_and_source -> insert_column_list insert_values_list;
+# insert_columns_and_source -> insert_column_list insert_values_list | select_statement;
+
+insert_column_list -> " ( " columns " ) " | @;
+insert_values_list "VALUES" -> " VALUES ( " insert_value ")";
+insert_value -> @string='1, "abc"';
+
+## -----
+
+update_statement "UPDATE" -> "UPDATE " table_name set_clause where_clause;
+set_clause "SET" -> " SET " set_clause_list;
+set_clause_list -> @string='column = "value"';

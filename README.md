@@ -31,3 +31,27 @@ Second pass took opposite direction. The idea was not to use a grammar but to bu
 Here is a work-in-progress example of an interface for generating SPARQL queries:
 
 ![Example UI for generating SPARQL queries](./doc/img/sparql-ui-example.png)
+
+### Approach 3 - Grammars again (Kaptain)
+
+I found a cool tool called [Kaptain](http://kaptain.sourceforge.net/) which takes a grammar file and generates graphical UI using Qt4. It is very similar concept I had in mind. User can fill in the values and the tool generates the final textual query. The tool is language agnostic. There are special annotations to control layout and input data types.
+
+I've experimented with Kaptain to create UI to help build SQL queries (INSERT, UPDATE and DELETE):
+
+![Insert query](./doc/img/kaptain-sql-insert.png) ![Update query](./doc/img/kaptain-sql-update.png) ![Delete query](./doc/img/kaptain-sql-delete.png)
+
+And slightly more complicated SELECT query:
+
+![Select query](./doc/img/kaptain-sql-select.png)
+
+There is also a cool example showing how to generate [single purpose UI for database access](http://kaptain.sourceforge.net/docs/database/). Although it is a very interesting approach the tool has some limitations:
+
+- No support recursion.
+- Rules cannot occur multiple times (e.g. if tabbed interface, we cannost share `where_clause` rule in select, update and others).
+- Default values for choices (`|` operator) cannot be specified. Also default state for optional rules cannot be specified.
+- No web interface.
+- Extending with additional functionality of customizing UI would be difficult.
+
+## Future work
+
+For the next pass I would like to combine advantages of approach 2 and 3. To have a system that is formally expressive as grammars, but is written as React components that would allow easy customization.
